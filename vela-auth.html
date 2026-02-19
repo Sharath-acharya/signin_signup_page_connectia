@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vela — Sign In</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Instrument Serif", "serif"],
+              sans: ["Geist", "sans-serif"],
+            },
+            colors: {
+              violet: { DEFAULT: "#7c5cfc", soft: "rgba(124,92,252,0.12)" },
+            },
+            keyframes: {
+              up: {
+                from: { opacity: 0, transform: "translateY(18px)" },
+                to: { opacity: 1, transform: "translateY(0)" },
+              },
+            },
+            animation: { up: "up .55s cubic-bezier(.22,.68,0,1.2) both" },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Radial glow behind card */
+      .glow {
+        background: radial-gradient(
+          ellipse 70% 50% at 50% 40%,
+          rgba(124, 92, 252, 0.13) 0%,
+          transparent 70%
+        );
+      }
+
+      /* Input focus ring */
+      .field:focus {
+        outline: none;
+        border-color: #7c5cfc;
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.15);
+      }
+
+      /* Slide-in for panel switch */
+      .panel {
+        display: none;
+      }
+      .panel.on {
+        display: block;
+        animation: up 0.3s ease both;
+      }
+
+      /* CTA hover fill */
+      .cta {
+        transition:
+          background 0.25s,
+          box-shadow 0.25s;
+      }
+      .cta:hover {
+        background: #6b4ef0;
+        box-shadow: 0 8px 28px rgba(124, 92, 252, 0.4);
+      }
+      .cta:active {
+        transform: scale(0.99);
+      }
+
+      /* Social btn hover */
+      .soc {
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .soc:hover {
+        border-color: rgba(124, 92, 252, 0.5);
+        background: rgba(124, 92, 252, 0.07);
+      }
+
+      /* Strength bars */
+      .bar {
+        transition: background 0.3s;
+      }
+
+      /* Tab underline */
+      .tab-line {
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-black min-h-screen font-sans flex flex-col items-center justify-center p-5"
+  >
+    <!-- Background glow -->
+    <div class="glow fixed inset-0 pointer-events-none"></div>
+
+    <!-- ── LOGO ── -->
+    <a
+      href="https://vela.io"
+      class="relative z-10 flex items-center gap-2.5 mb-9 animate-up"
+    >
+      <div
+        class="w-8 h-8 rounded-lg bg-violet flex items-center justify-center"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 13L8 3l5 10H3z" fill="white" opacity=".9" />
+        </svg>
+      </div>
+      <span class="text-white text-xl font-serif italic tracking-wide"
+        >vela.io</span
+      >
+    </a>
+
+    <!-- ── CARD ── -->
+    <div
+      class="relative z-10 w-full max-w-sm bg-[#0d0d0d] border border-white/[0.07] rounded-2xl p-8 shadow-2xl animate-up"
+      style="animation-delay: 0.08s"
+    >
+      <!-- Tab switcher -->
+      <div class="relative flex mb-8 border-b border-white/[0.07]">
+        <button
+          id="t1"
+          onclick="sw('in')"
+          class="flex-1 pb-3 text-xs font-medium tracking-widest uppercase text-white/80 transition-colors"
+        >
+          Sign In
+        </button>
+        <button
+          id="t2"
+          onclick="sw('up')"
+          class="flex-1 pb-3 text-xs font-medium tracking-widest uppercase text-white/30 transition-colors"
+        >
+          Sign Up
+        </button>
+        <!-- sliding underline -->
+        <div
+          id="line"
+          class="tab-line absolute bottom-0 left-0 w-1/2 h-[2px] bg-violet rounded-full"
+        ></div>
+      </div>
+
+      <!-- ── SIGN IN ── -->
+      <div id="in" class="panel on">
+        <h1 class="font-serif text-3xl text-white mb-1">Welcome back</h1>
+        <p class="text-white/35 text-sm mb-7">Sign in to your Vela account.</p>
+
+        <!-- Social -->
+        <div class="flex gap-3 mb-6">
+          <button
+            class="soc flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/50 text-xs font-medium tracking-wide"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            Google
+          </button>
+          <button
+            class="soc flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/50 text-xs font-medium tracking-wide"
+          >
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"
+              />
+            </svg>
+            GitHub
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex-1 h-px bg-white/[0.06]"></div>
+          <span class="text-white/20 text-xs tracking-widest">OR</span>
+          <div class="flex-1 h-px bg-white/[0.06]"></div>
+        </div>
+
+        <!-- Email -->
+        <label
+          class="block text-[11px] font-medium tracking-widest text-white/35 uppercase mb-2"
+          >Email</label
+        >
+        <input
+          type="email"
+          placeholder="you@vela.io"
+          class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 mb-4"
+        />
+
+        <!-- Password -->
+        <div class="flex justify-between items-center mb-2">
+          <label
+            class="text-[11px] font-medium tracking-widest text-white/35 uppercase"
+            >Password</label
+          >
+          <a
+            href="#"
+            class="text-[11px] text-violet/70 hover:text-violet transition-colors"
+            >Forgot?</a
+          >
+        </div>
+        <div class="relative mb-6">
+          <input
+            id="p1"
+            type="password"
+            placeholder="••••••••"
+            class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 pr-11 text-white text-sm placeholder-white/20"
+          />
+          <button
+            onclick="eye('p1')"
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
+          >
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+
+        <button
+          class="cta w-full bg-violet rounded-xl py-3 text-white text-sm font-medium tracking-wide"
+        >
+          Sign In →
+        </button>
+      </div>
+
+      <!-- ── SIGN UP ── -->
+      <div id="up" class="panel">
+        <h1 class="font-serif text-3xl text-white mb-1">Create account</h1>
+        <p class="text-white/35 text-sm mb-7">
+          Join thousands of teams on Vela.
+        </p>
+
+        <!-- Name row -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div>
+            <label
+              class="block text-[11px] font-medium tracking-widest text-white/35 uppercase mb-2"
+              >First</label
+            >
+            <input
+              type="text"
+              placeholder="Alex"
+              class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-white/20"
+            />
+          </div>
+          <div>
+            <label
+              class="block text-[11px] font-medium tracking-widest text-white/35 uppercase mb-2"
+              >Last</label
+            >
+            <input
+              type="text"
+              placeholder="Morgan"
+              class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-white/20"
+            />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <label
+          class="block text-[11px] font-medium tracking-widest text-white/35 uppercase mb-2"
+          >Email</label
+        >
+        <input
+          type="email"
+          placeholder="you@vela.io"
+          class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 mb-4"
+        />
+
+        <!-- Password + strength -->
+        <label
+          class="block text-[11px] font-medium tracking-widest text-white/35 uppercase mb-2"
+          >Password</label
+        >
+        <div class="relative mb-2">
+          <input
+            id="p2"
+            type="password"
+            placeholder="Min. 8 characters"
+            oninput="str(this)"
+            class="field w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 pr-11 text-white text-sm placeholder-white/20"
+          />
+          <button
+            onclick="eye('p2')"
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors"
+          >
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+        <!-- Strength bars -->
+        <div class="flex gap-1.5 mb-5">
+          <div
+            id="s1"
+            class="bar flex-1 h-[3px] rounded-full bg-white/[0.07]"
+          ></div>
+          <div
+            id="s2"
+            class="bar flex-1 h-[3px] rounded-full bg-white/[0.07]"
+          ></div>
+          <div
+            id="s3"
+            class="bar flex-1 h-[3px] rounded-full bg-white/[0.07]"
+          ></div>
+          <div
+            id="s4"
+            class="bar flex-1 h-[3px] rounded-full bg-white/[0.07]"
+          ></div>
+        </div>
+
+        <!-- Terms -->
+        <label class="flex items-start gap-3 mb-6 cursor-pointer">
+          <input type="checkbox" class="mt-0.5 accent-violet cursor-pointer" />
+          <span class="text-xs text-white/30 leading-relaxed">
+            I agree to Vela's
+            <a
+              href="https://vela.io/terms"
+              class="text-violet/70 hover:text-violet transition-colors"
+              >Terms of Service</a
+            >
+            and
+            <a
+              href="https://vela.io/privacy"
+              class="text-violet/70 hover:text-violet transition-colors"
+              >Privacy Policy</a
+            >
+          </span>
+        </label>
+
+        <button
+          class="cta w-full bg-violet rounded-xl py-3 text-white text-sm font-medium tracking-wide"
+        >
+          Create Account →
+        </button>
+
+        <!-- Social divider -->
+        <div class="flex items-center gap-3 my-5">
+          <div class="flex-1 h-px bg-white/[0.06]"></div>
+          <span class="text-white/20 text-xs tracking-widest">OR</span>
+          <div class="flex-1 h-px bg-white/[0.06]"></div>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            class="soc flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/50 text-xs font-medium"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            Google
+          </button>
+          <button
+            class="soc flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/50 text-xs font-medium"
+          >
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"
+              />
+            </svg>
+            GitHub
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer toggle -->
+      <p id="foot" class="text-center text-xs text-white/25 mt-7">
+        Don't have an account?
+        <a
+          href="#"
+          onclick="
+            sw('up');
+            return false;
+          "
+          class="text-violet/80 hover:text-violet font-medium transition-colors"
+          >Sign up free</a
+        >
+      </p>
+    </div>
+
+    <!-- Bottom domain line -->
+    <p
+      class="relative z-10 mt-8 text-[11px] text-white/15 animate-up"
+      style="animation-delay: 0.2s"
+    >
+      © 2025
+      <a href="https://vela.io" class="hover:text-white/40 transition-colors"
+        >vela.io</a
+      >
+      ·
+      <a
+        href="https://vela.io/privacy"
+        class="hover:text-white/40 transition-colors"
+        >Privacy</a
+      >
+      ·
+      <a
+        href="https://vela.io/terms"
+        class="hover:text-white/40 transition-colors"
+        >Terms</a
+      >
+    </p>
+
+    <script>
+      function sw(id) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("on"));
+        document.getElementById(id).classList.add("on");
+
+        const isIn = id === "in";
+        document.getElementById("t1").className =
+          `flex-1 pb-3 text-xs font-medium tracking-widest uppercase transition-colors ${isIn ? "text-white/80" : "text-white/30"}`;
+        document.getElementById("t2").className =
+          `flex-1 pb-3 text-xs font-medium tracking-widest uppercase transition-colors ${isIn ? "text-white/30" : "text-white/80"}`;
+        document.getElementById("line").style.transform = isIn
+          ? "translateX(0)"
+          : "translateX(100%)";
+        document.getElementById("foot").innerHTML = isIn
+          ? `Don't have an account? <a href="#" onclick="sw('up');return false" class="text-violet/80 hover:text-violet font-medium transition-colors">Sign up free</a>`
+          : `Already have an account? <a href="#" onclick="sw('in');return false" class="text-violet/80 hover:text-violet font-medium transition-colors">Sign in</a>`;
+      }
+
+      function eye(id) {
+        const i = document.getElementById(id);
+        i.type = i.type === "password" ? "text" : "password";
+      }
+
+      function str(el) {
+        const v = el.value;
+        const s = [
+          v.length >= 8,
+          /[A-Z]/.test(v),
+          /[0-9]/.test(v),
+          /[^A-Za-z0-9]/.test(v),
+        ].filter(Boolean).length;
+        const c = ["#ef4444", "#f97316", "#eab308", "#7c5cfc"];
+        [1, 2, 3, 4].forEach(
+          (n) =>
+            (document.getElementById("s" + n).style.background =
+              n <= s ? c[s - 1] : "rgba(255,255,255,0.07)"),
+        );
+      }
+    </script>
+  </body>
+</html>
